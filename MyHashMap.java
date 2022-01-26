@@ -112,10 +112,10 @@ class ForwardList<K,V>{
        if(head == null)
            return null;
        Entry<K,V> searchingEntry = head;
-       while (searchingEntry.getKey() != key && searchingEntry != null){
+       while (searchingEntry != null && searchingEntry.getKey() != key){
            searchingEntry = searchingEntry.getNextEntry();
        }
-       if(searchingEntry.getKey() == key)
+       if(searchingEntry != null && searchingEntry.getKey() == key)
            return searchingEntry.getValue();
        else
            return null;
@@ -138,7 +138,16 @@ class ForwardList<K,V>{
             if(previousEntry == null)
                 return;
             previousEntry.setNextEntry(nextEntry);
+            return;
         }
+        if(previousEntry == null){
+            currentEntry.setKey(null);
+            currentEntry.setValue(null);
+            return;
+        }
+        currentEntry.setKey(null);
+        currentEntry.setValue(null);
+        previousEntry.setNextEntry(null);
     }
 }
 class Entry<K,V>{
